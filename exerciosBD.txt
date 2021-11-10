@@ -1,0 +1,42 @@
+===========CRIANDO AS TABELAS COM FOREING KEY ===========================
+
+create table endereco(
+id int primary key generated always as identity
+, logradouro varchar(50) not null
+,numero varchar(20) not null
+,complemento varchar(50) not null
+,bairro varchar(50) not null
+,cidade varchar(50) not null
+,cep varchar(50) not null
+);
+
+create table pessoa(
+id int primary key generated always as identity
+,nome varchar(50) not null
+, sobrenome varchar(50) not null
+, idade int not null
+,endereco_id int not null
+,constraint fk_endereco foreign key(endereco_id) references endereco(id)
+);
+========================================================================================
+INSERT
+
+insert into endereco(logradouro, numero, complemento, bairro, cidade, cep) values ('Taubaté', '232', 'Apto 2', 'Zambia', 'Burueri', '00765232')
+insert into pessoa(nome, sobrenome, idade, endereco_id) values ('Sandro', 'Sotilli', 67, 1)
+
+===========================
+DELETE ***não posso deletar endereço que está sendo utilizado por pessoa
+delete from endereco
+where id = 1
+*** não posso adicionar um endereço que não exista (neste caso existe somente 1 id = 1)
+insert into pessoa(nome, sobrenome, idade, endereco_id) values ('Sandro', 'Sotilli', 67, 1)
+=========================JOIN===========================================================
+select 
+p.id as "PessoaId"
+,p.nome
+,p.sobrenome
+, e.id as "EnderecoId"
+,e.logradouro
+,e.cidade
+from pessoa p
+join endereco as e on p.endereco_id = e.id
