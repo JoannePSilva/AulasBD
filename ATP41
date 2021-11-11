@@ -8,16 +8,20 @@ id int primary key generated always as identity
 
 create table Categoria(
 id int primary key generated always as identity
-, nome varchar(50) not null
-,descricao varchar(20) not null
-,complemento varchar(150) null
+,nome varchar(50) not null
+,descricao varchar(20) null
+);
+
+create table Carro(
+id int primary key generated always as identity
+,modelo varchar(50) not null
+,marca varchar(20) not null
 );
 
 alter table Carro
 add column chassi varchar(50) not null;
 alter table Carro
 add column ano int not null;
-
 --remove a tabela código de Produto
 alter table produtos drop codigo 
 
@@ -26,4 +30,4 @@ alter table produtos
 add column id_categoria int not null;
 --adicione uma constraint com Foreing Key na produtos
 alter table produtos 
-add constraint fk_categoria foreign key (id_categoria) references categoria(id);
+add constraint fk_categoria foreign key (id_categoria) references Categoria(id);
